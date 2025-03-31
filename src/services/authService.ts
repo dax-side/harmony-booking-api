@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
-import User, { IUser } from '../models/userModel';
+import User, { IUser } from '../models/user.model';
+import { Types } from 'mongoose';
 
 export interface AuthResponse {
   user: {
@@ -15,7 +16,7 @@ export const registerUser = async (
   email: string,
   password: string,
   name: string,
-  role: 'admin' | 'artist' | 'customer' = 'customer'
+  role: 'admin' | 'artist' | 'user' = 'user'
 ): Promise<AuthResponse> => {
   // Check if user exists
   const existingUser = await User.findOne({ email });
@@ -34,11 +35,11 @@ export const registerUser = async (
   await user.save();
 
   // Generate token
-  const token = generateToken(user);
+  const token = generateToken(user as IUser);
 
   return {
     user: {
-      id: user._id.toString(),
+      id: (user._id as Types.ObjectId).toString(),
       name: user.name,
       email: user.email,
       role: user.role,
@@ -58,17 +59,17 @@ export const loginUser = async (
   }
 
   // Check password
-  const isPasswordMatch = await user.comparePassword(password);
+  const isPasswordMatch = await user.matchPassword(password);
   if (!isPasswordMatch) {
     throw new Error('Invalid email or password');
   }
 
   // Generate token
-  const token = generateToken(user);
+  const token = generateToken(user as IUser);
 
   return {
     user: {
-      id: user._id.toString(),
+      id: (user._id as Types.ObjectId).toString(),
       name: user.name,
       email: user.email,
       role: user.role,

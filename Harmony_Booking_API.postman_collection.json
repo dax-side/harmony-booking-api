@@ -82,6 +82,36 @@
 							]
 						}
 					}
+				},
+				{
+					"name": "Update User Details",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated User Name\",\n  \"email\": \"updated.email@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					}
 				}
 			]
 		},
@@ -210,6 +240,43 @@
 							"path": [
 								"artists",
 								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ARTIST_ID_HERE"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Artist Availability",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"availability\": [\n    {\n      \"date\": \"2023-07-15T00:00:00.000Z\",\n      \"isAvailable\": true\n    },\n    {\n      \"date\": \"2023-07-16T00:00:00.000Z\",\n      \"isAvailable\": true\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/artists/:id/availability",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artists",
+								":id",
+								"availability"
 							],
 							"variable": [
 								{
@@ -456,17 +523,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"status\": \"accepted\"\n}"
+							"raw": "{\n  \"status\": \"confirmed\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/bookings/:id/status",
+							"raw": "{{base_url}}/bookings/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"bookings",
-								":id",
-								"status"
+								":id"
 							],
 							"variable": [
 								{
@@ -478,9 +544,37 @@
 					}
 				},
 				{
-					"name": "Update Artist Availability",
+					"name": "Cancel Booking",
 					"request": {
-						"method": "PUT",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/bookings/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bookings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "BOOKING_ID_HERE"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Process Payment",
+					"request": {
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -493,22 +587,22 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"availability\": [\n    {\n      \"date\": \"2023-07-15T00:00:00.000Z\",\n      \"isAvailable\": true\n    },\n    {\n      \"date\": \"2023-07-16T00:00:00.000Z\",\n      \"isAvailable\": true\n    }\n  ]\n}"
+							"raw": "{\n  \"paymentMethod\": \"credit_card\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/artists/:id/availability",
+							"raw": "{{base_url}}/bookings/:id/payment",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"artists",
+								"bookings",
 								":id",
-								"availability"
+								"payment"
 							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "ARTIST_ID_HERE"
+									"value": "BOOKING_ID_HERE"
 								}
 							]
 						}
@@ -538,6 +632,29 @@
 								{
 									"key": "artistId",
 									"value": "ARTIST_ID_HERE"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Review",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reviews/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reviews",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "REVIEW_ID_HERE"
 								}
 							]
 						}
@@ -575,6 +692,34 @@
 								{
 									"key": "artistId",
 									"value": "ARTIST_ID_HERE"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/reviews/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reviews",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "REVIEW_ID_HERE"
 								}
 							]
 						}

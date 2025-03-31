@@ -155,6 +155,70 @@
 							]
 						}
 					}
+				},
+				{
+					"name": "Update Artist",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"stageName\": \"Updated Artist Name\",\n  \"bio\": \"Updated professional artist with extensive experience\",\n  \"genres\": [\"Rock\", \"Jazz\", \"Blues\"],\n  \"hourlyRate\": 150,\n  \"profileImage\": \"updated-profile.jpg\",\n  \"gallery\": [\"image1.jpg\", \"image2.jpg\", \"image3.jpg\"],\n  \"socialLinks\": {\n    \"website\": \"updatedartistwebsite.com\",\n    \"instagram\": \"updated_artist_insta\",\n    \"twitter\": \"updated_artist_twitter\",\n    \"facebook\": \"updated_artist_facebook\",\n    \"youtube\": \"updated_artist_youtube\",\n    \"spotify\": \"updated_artist_spotify\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/artists/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artists",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ARTIST_ID_HERE"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Artist",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/artists/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artists",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ARTIST_ID_HERE"
+								}
+							]
+						}
+					}
 				}
 			]
 		},
@@ -225,6 +289,70 @@
 							],
 							"path": [
 								"events"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Updated Wedding Reception\",\n  \"description\": \"Updated wedding reception requiring a live band and DJ\",\n  \"eventType\": \"wedding\",\n  \"date\": \"2023-12-20T19:00:00Z\",\n  \"duration\": 5,\n  \"location\": {\n    \"address\": \"456 Park Avenue\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"country\": \"USA\",\n    \"zipCode\": \"10022\",\n    \"coordinates\": {\n      \"lat\": 40.7631,\n      \"lng\": -73.9712\n    }\n  },\n  \"budget\": 2500,\n  \"requiredGenres\": [\"Jazz\", \"Pop\", \"R&B\"],\n  \"status\": \"published\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/events/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "EVENT_ID_HERE"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Event",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/events/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "EVENT_ID_HERE"
+								}
 							]
 						}
 					}

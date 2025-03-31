@@ -69,6 +69,15 @@ export const getBookings = async (
     // Execute query
     const bookings = await query;
 
+    // Format response data to make IDs more user-friendly
+    const formattedBookings = bookings.map(booking => {
+      const bookingData = booking.toObject();
+      return {
+        bookingId: booking._id,
+        ...bookingData
+      };
+    });
+
     // Pagination result
     const pagination: any = {};
 
@@ -90,7 +99,7 @@ export const getBookings = async (
       success: true,
       count: bookings.length,
       pagination,
-      data: bookings,
+      data: formattedBookings,
     });
   } catch (err) {
     next(err);
@@ -129,9 +138,16 @@ export const getBooking = async (
       );
     }
 
+    // Format response to include clear bookingId
+    const bookingData = booking.toObject();
+    const formattedBooking = {
+      bookingId: booking._id,
+      ...bookingData
+    };
+
     res.status(200).json({
       success: true,
-      data: booking,
+      data: formattedBooking,
     });
   } catch (err) {
     next(err);

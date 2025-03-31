@@ -9,8 +9,10 @@ A comprehensive RESTful API for a music artist booking platform. This API enable
 - [API Documentation](#api-documentation)
 - [Database Models](#database-models)
 - [Authentication](#authentication)
+- [Payment Processing](#payment-processing)
 - [Error Handling](#error-handling)
 - [Testing](#testing)
+- [Recent Updates](#recent-updates)
 
 ## Features
 
@@ -21,6 +23,7 @@ A comprehensive RESTful API for a music artist booking platform. This API enable
 - **Booking System**: Request, confirm, and manage bookings between users and artists
 - **Reviews & Ratings**: Leave and view reviews for artists
 - **Search & Filtering**: Find artists and events based on various criteria
+- **Payment Processing**: Simulated payment processing with different payment methods
 
 ## Tech Stack
 
@@ -286,6 +289,18 @@ All API requests should be made to: `http://localhost:3000/api`
 ```
 - **Response**: Updated booking
 
+#### Process Payment
+- **URL**: `/bookings/:id/payment`
+- **Method**: `POST`
+- **Auth**: Required
+- **Body**:
+```json
+{
+  "paymentMethod": "credit_card" // or "paypal", "bank_transfer", "cash"
+}
+```
+- **Response**: Updated booking with payment information
+
 ### Review Endpoints
 
 #### Get All Reviews for Artist
@@ -368,6 +383,37 @@ The API uses JSON Web Tokens (JWT) for authentication. To access protected route
 1. Login to obtain a token
 2. Include the token in the Authorization header of your requests:
    `Authorization: Bearer YOUR_TOKEN_HERE`
+
+## Payment Processing
+
+The API includes a simulated payment system for handling booking payments. In the current implementation:
+
+1. Users can process payments for bookings using various payment methods
+2. The system updates booking status to 'confirmed' once payment is processed
+3. Payment details are stored with the booking
+
+**Supported Payment Methods**:
+- Credit Card
+- PayPal
+- Bank Transfer
+- Cash
+
+**Note**: The current implementation simulates payment processing. In a production environment, this would be integrated with a real payment gateway like Stripe, PayPal, or Square.
+
+## Recent Updates
+
+### Version 1.1.0
+- Added consistent error handling with appropriate HTTP status codes
+- Fixed type issues with Mongoose models and controllers
+- Added TypeScript support for all API components
+- Improved query handling with proper type safety
+- Updated Mongoose model hooks to use current supported methods
+
+### Version 1.0.0
+- Initial release of the Harmony Booking API
+- Basic CRUD operations for all resources
+- Authentication with JWT
+- Role-based access control
 
 ## Error Handling
 

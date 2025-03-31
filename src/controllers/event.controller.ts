@@ -55,6 +55,15 @@ export const getEvents = async (
     // Executing query
     const events = await query;
 
+    // Format response data to make IDs more user-friendly
+    const formattedEvents = events.map(event => {
+      const eventData = event.toObject();
+      return {
+        eventId: event._id,
+        ...eventData
+      };
+    });
+
     // Pagination result
     const pagination: any = {};
 
@@ -76,7 +85,7 @@ export const getEvents = async (
       success: true,
       count: events.length,
       pagination,
-      data: events,
+      data: formattedEvents,
     });
   } catch (err) {
     next(err);
@@ -100,9 +109,16 @@ export const getEvent = async (
       );
     }
 
+    // Format response to include clear eventId
+    const eventData = event.toObject();
+    const formattedEvent = {
+      eventId: event._id,
+      ...eventData
+    };
+
     res.status(200).json({
       success: true,
-      data: event,
+      data: formattedEvent,
     });
   } catch (err) {
     next(err);

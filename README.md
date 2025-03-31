@@ -10,6 +10,7 @@ A comprehensive RESTful API for a music artist booking platform. This API enable
 - [Database Models](#database-models)
 - [Authentication](#authentication)
 - [Error Handling](#error-handling)
+- [Testing](#testing)
 
 ## Features
 
@@ -60,15 +61,50 @@ JWT_EXPIRE=30d
 NODE_ENV=development
 ```
 
-4. Seed the database:
-```bash
-npm run seed
-```
-
-5. Start the development server:
+4. Start the development server:
 ```bash
 npm run dev
 ```
+
+## Testing
+
+### Test Database
+
+**Note: The following connection string is provided temporarily for evaluation purposes only and will be disabled after review. In a real production environment, connection details would never be included in documentation.**
+
+For evaluation of this API, use the following MongoDB connection string:
+```
+mongodb+srv://damolaadegbite77:UA5ft5FFtvAiE5Hr@cluster0.kst2mqi.mongodb.net/harmony-booking?retryWrites=true&w=majority
+```
+
+This database is pre-populated with sample data including users, artists, events, bookings, and reviews for testing the API endpoints.
+
+### Test User Credentials
+
+You can use these pre-created user accounts for testing:
+
+**Admin User:**
+- Email: admin@example.com
+- Password: Password123
+
+**Artist User:**
+- Email: artist@example.com
+- Password: Password123
+
+**Regular User:**
+- Email: user@example.com
+- Password: Password123
+
+### Postman Collection
+
+A Postman collection is included in the repository (`Harmony_Booking_API.postman_collection.json`). Import this collection into Postman to test all available endpoints.
+
+The collection includes:
+- Authentication requests
+- Artist management (create, read, update, delete)
+- Event management (create, read, update, delete)
+- Booking operations
+- Review functionality
 
 ## API Documentation
 
@@ -215,8 +251,7 @@ All API requests should be made to: `http://localhost:3000/api`
 
 #### Get All Bookings
 - **URL**: `/bookings`
-- **Method**: `GET`
-- **Auth**: Required
+- **Method**: `GET`- **Auth**: Required
 - **Response**: List of bookings (filtered by user role)
 
 #### Get Single Booking

@@ -1,51 +1,52 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import { connectDB } from './config/db';
+import { errorHandler } from './middlewares/error.middleware';
+
+// Routes
+import authRoutes from './routes/auth.routes';
+import artistRoutes from './routes/artist.routes';
+import eventRoutes from './routes/event.routes';
+import bookingRoutes from './routes/booking.routes';
+import reviewRoutes from './routes/review.routes';
 
 // Load environment variables
 dotenv.config();
 
-// Import routes (to be added later)
-// import authRoutes from './routes/authRoutes';
+// Connect to database
+connectDB();
 
-// Initialize express
 const app: Application = express();
 
 // Middleware
-app.use(helmet());
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(helmet());
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/harmony-booking')
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('MongoDB connection error:', error);
-    process.exit(1);
-  });
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/artists', artistRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/reviews', reviewRoutes);
 
-// Basic route
-app.get('/', (req: Request, res: Response) => {
-  res.send('Harmony Booking API - Music Booking Platform');
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
 });
 
-// Routes (to be added)
-// app.use('/api/auth', authRoutes);
-
-// Error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({
+// 404 handler
+app.use((req: Request, res: Response) => {
+  res.status(404).json({
     success: false,
-    message: 'Internal Server Error',
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined,
+    message: 'Route not found',
   });
 });
+
+// Error handler
+app.use(errorHandler);
 
 export default app;

@@ -56,6 +56,15 @@ export const getArtists = async (
     // Executing query
     const artists = await query;
 
+    // Format response data to make IDs more user-friendly
+    const formattedArtists = artists.map(artist => {
+      const artistData = artist.toObject();
+      return {
+        artistId: artist._id,
+        ...artistData
+      };
+    });
+
     // Pagination result
     const pagination: any = {};
 
@@ -77,7 +86,7 @@ export const getArtists = async (
       success: true,
       count: artists.length,
       pagination,
-      data: artists,
+      data: formattedArtists,
     });
   } catch (err) {
     next(err);
@@ -101,9 +110,16 @@ export const getArtist = async (
       );
     }
 
+    // Format response to include clear artistId
+    const artistData = artist.toObject();
+    const formattedArtist = {
+      artistId: artist._id,
+      ...artistData
+    };
+
     res.status(200).json({
       success: true,
-      data: artist,
+      data: formattedArtist,
     });
   } catch (err) {
     next(err);

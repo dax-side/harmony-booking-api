@@ -77,7 +77,7 @@ npm run dev
 
 For evaluation of this API, use the following MongoDB connection string:
 ```
-mongodb+srv://damolaadegbite77:UA5ft5FFtvAiE5Hr@cluster0.kst2mqi.mongodb.net/harmony-booking?retryWrites=true&w=majority
+
 ```
 
 This database is pre-populated with sample data including users, artists, events, bookings, and reviews for testing the API endpoints.
